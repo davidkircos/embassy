@@ -4,6 +4,15 @@ from django.db import models
 from django.db import models
 from ambassador import validators
 
+
 # Create your models here.
-class ReferralLink(models.Model):
-    title = models.CharField(max_length=200, unique=True, validators=[validators.validate_not_landing])
+class Link(models.Model):
+    title = models.CharField(max_length=200, unique=True, blank=False, validators=[validators.validate_not_landing])
+    clicks = models.IntegerField(default=0, blank=False, editable=False)
+
+    def Click(self):
+        """
+        Click the link.
+        :return:
+        """
+        self.clicks += 1
