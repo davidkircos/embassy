@@ -2,36 +2,36 @@ var myApp = angular.module('myApp', []);
 
 myApp.controller('GreetingController', ['$scope', '$http', function ($scope, $http) {
 
-    $scope.people = [];
-
     $scope.errorVisible = false;
     $scope.error = "";
 
-    $scope.text = '';
+    $scope.links = [];
+    $scope.selectedLink = {};
 
+    $scope.newLinkName = '';
 
-    $scope.loadPeople = function () {
+    $scope.loadLinks = function () {
         var httpRequest = $http({
             method: 'GET',
             url: '/api/links/',
 
         }).success(function (data, status) {
-            $scope.people = data;
+            $scope.links = data;
         });
 
     };
 
-    $scope.loadPeople();
+    $scope.loadLinks();
 
-
+    //Attempt to create a new Link
     $scope.submit = function () {
         var data = {
-            title: $scope.text
+            title: $scope.newLinkName
         }
         $http.post("/api/links/", data)
             .success(function (data, status) {
-                $scope.loadPeople();
-                $scope.text = '';
+                $scope.loadLinks();
+                $scope.newLinkName = '';
                 $scope.errorVisible = false;
             })
             .error(function (data, status) {
@@ -41,9 +41,7 @@ myApp.controller('GreetingController', ['$scope', '$http', function ($scope, $ht
             })
     };
 
-    $scope.selectedLink = {};
-
-    // gets the template to ng-include for a table row / item
+    // gets the template either edit or display, if link is being edited
     $scope.getTemplate = function (contact) {
         if (Object.keys($scope.selectedLink).length === 0) {
             return 'display';
@@ -53,17 +51,19 @@ myApp.controller('GreetingController', ['$scope', '$http', function ($scope, $ht
         return 'display';
     };
 
-    $scope.editContact = function (contact) {
+    // change template to edit for link being edited (makes form appear)
+    $scope.editLink = function (contact) {
 
         $scope.selectedLink = angular.copy(contact);
         $scope.errorVisible = false;
     };
 
-    $scope.saveContact = function (idx) {
+    // save edited link
+    $scope.saveLink = function (idx) {
 
         // Save new title
 
-        $http.put('/api/links/' + $scope.people[idx].id + '/', $scope.people[idx])
+        $http.put('/api/links/' + $scope.links[idx].id + '/', $scope.links[idx])
             .success(function (data, status) {
                 $scope.reset();
                 $scope.errorVisible = false;
@@ -74,11 +74,19 @@ myApp.controller('GreetingController', ['$scope', '$http', function ($scope, $ht
             });
     };
 
+    // delete selected link
+    $scope.deleteLink = function (idx) {
+        $http.delete('/api/links/' + $scope.links[idx].id + '/', $scope.links[idx])
+            .success(function (data, status) {
+                $scope.reset();
+            })
+    }
+
+    // refreshes the view, clears errors
     $scope.reset = function () {
-        $scope.loadPeople();
+        $scope.loadLinks();
         $scope.selectedLink = {};
         $scope.errorVisible = false;
     };
-
 
 }]);

@@ -1,33 +1,70 @@
-{% load staticfiles %}
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+<style>
+body {
+	background: black;
+}
+.welcome {
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
 
-    <title>Embassy</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
-    <script src="{% static 'ambassador/script.js' %}"></script>
+	background: -webkit-linear-gradient(#1D002E, black); /* For Safari 5.1 to 6.0 */
+	background: -o-linear-gradient(#1D002E, black); /* For Opera 11.1 to 12.0 */
+	background: -moz-linear-gradient(#1D002E, black); /* For Firefox 3.6 to 15 */
+	background: linear-gradient(#1D002E, black); /* Standard syntax (must be last) */
+	color: white;
+}
 
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha256-MfvZlkHCEqatNoGiOXveE8FIwMzZg4W85qfrfIFBfYc= sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ=="
-          crossorigin="anonymous">
+.welcome-box {
+	padding-left:15%;
+	padding-top: 15%;
+	padding-right: 10%;
+}
 
+.welcome-header {
 
+	font-size: 3em;
+	font-family: 'Raleway', sans-serif;
+	margin-bottom: 10px;
+}
+
+.welcome-text {
+	font-size: 2.5em;
+	font-family: 'Raleway', sans-serif;
+	color:#F2F0FF;
+
+}
+</style>
 </head>
 <body>
-<div class="container">
 
-        <div class="container">
-
-      <div class="starter-template">
-        <h1><span style="color: darkviolet">{{ referrer }}</span> is awesome!</h1>
-        <p class="lead">Come join Tim's World Wide Web. - Embassy Inc.</p>
-      </div>
-
-    </div><!-- /.container -->
-
+<div class="welcome">
+	<div class="welcome-box">
+		<h3 class="welcome-header"><span style="color: #FF1D1D">{{ referrer|capfirst }}</span> are awesome!</h3>
+		<span class="welcome-text">Come join Tim's World Wide Web.</span>
+	</div>
 </div>
 
-
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+<script type="text/javascript">
+$( document ).ready(function() {
+	$(".welcome-word").hide();
+    $(".welcome-word").fadeIn("slow");
+
+    setTimeout(function() {
+    	$(".welcome-word").fadeOut("slow", function() {
+    		$(".welcome-word").text("safety");
+    	});
+    	$(".welcome-word").fadeIn("slow");
+
+     }, 5000);
+});
+</script>
 </html>
