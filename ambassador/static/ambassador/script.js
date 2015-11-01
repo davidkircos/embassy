@@ -34,11 +34,51 @@ myApp.controller('GreetingController', ['$scope', '$http', function ($scope, $ht
                 $scope.text = '';
                 $scope.errorVisible = false;
             })
-            .error(function (data, status){
+            .error(function (data, status) {
                 $scope.error = data.title[0];
                 $scope.errorVisible = true;
 
             })
     };
+
+    $scope.selectedLink = {};
+
+    // gets the template to ng-include for a table row / item
+    $scope.getTemplate = function (contact) {
+        if (Object.keys($scope.selectedLink).length === 0) {
+            return 'display';
+        } else if (contact.id === $scope.selectedLink.id) {
+            return 'edit';
+        }
+        return 'display';
+    };
+
+    $scope.editContact = function (contact) {
+
+        $scope.selectedLink = angular.copy(contact);
+        $scope.errorVisible = false;
+    };
+
+    $scope.saveContact = function (idx) {
+
+        // Save new title
+
+        $http.put('/api/links/' + $scope.people[idx].id + '/', $scope.people[idx])
+            .success(function (data, status) {
+                $scope.reset();
+                $scope.errorVisible = false;
+            })
+            .error(function (data, status) {
+                $scope.error = data.title[0];
+                $scope.errorVisible = true;
+            });
+    };
+
+    $scope.reset = function () {
+        $scope.loadPeople();
+        $scope.selectedLink = {};
+        $scope.errorVisible = false;
+    };
+
 
 }]);
