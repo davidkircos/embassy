@@ -21,14 +21,13 @@ from ambassador import views
 router = routers.DefaultRouter()
 router.register(r'links', views.LinkViewSet, "links")
 
-
 urlpatterns = [
     url(r'^$', views.index),
     url(r'^landing/', views.landing),
     url(r'^api/', include(router.urls)),
     url(r'^admin/', include(admin.site.urls)),
 
+    # has to be last!
     url(r'^(?P<referrertitle>\w+)', views.referral),
 
-    #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

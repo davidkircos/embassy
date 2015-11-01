@@ -26,7 +26,7 @@ def referral(request, referrertitle=None):
 
 class LinkViewSet(viewsets.ModelViewSet):
     """
-    API endpoint that allows ReferralLinks to be viewed or edited.
+    API endpoint that allows Links to be viewed or edited.
     """
     queryset = Link.objects.all().order_by('-clicks')
     serializer_class = LinkSerializer
