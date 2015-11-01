@@ -16,3 +16,4 @@ class Link(models.Model):
         :return:
         """
         self.clicks += 1
+        self.save()

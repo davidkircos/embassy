@@ -23,9 +23,12 @@ router.register(r'links', views.LinkViewSet, "links")
 
 
 urlpatterns = [
-    url(r'^$', views.index, name='ambassador.index'),
+    url(r'^$', views.index),
+    url(r'^landing/', views.landing),
     url(r'^api/', include(router.urls)),
-
     url(r'^admin/', include(admin.site.urls)),
+
+    url(r'^(?P<referrertitle>\w+)', views.referral),
+
     #url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

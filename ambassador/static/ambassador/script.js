@@ -7,7 +7,7 @@ myApp.controller('GreetingController', ['$scope', '$http', function ($scope, $ht
     $scope.errorVisible = false;
     $scope.error = "";
 
-    $scope.text = 'newlink';
+    $scope.text = '';
 
 
     $scope.loadPeople = function () {
